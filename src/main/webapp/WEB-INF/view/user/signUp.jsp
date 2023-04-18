@@ -4,7 +4,7 @@
 <div class="col-sm-8">
 	<h2>회원 가입</h2>
 	<h5>어서오세요 환영합니다</h5>
-	<div class="bg-light p-md-5 h-75 align-items-center justify-content-center">
+	<div class="bg-light p-md-5 h-75">
 		<form action="/user/sign-up" method="post">
 			<div class="form-group">
 				<label for="username">User Name:</label> 
@@ -12,13 +12,13 @@
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label> 
-				<input type="password" class="form-control" placeholder="Enter password" id="password">
+				<input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
 			</div>
 			<div class="form-group">
 				<label for="fullname">Full Name:</label> 
-				<input type="text" class="form-control" placeholder="Enter fullname" id="fullname">
+				<input type="text" class="form-control" placeholder="Enter fullname" id="fullname" name="fullname">
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">회원가입</button>
 		</form>
 	</div>
 </div>
