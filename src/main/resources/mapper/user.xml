@@ -4,26 +4,28 @@
 
 <mapper namespace="com.tenco.bank.repository.interfaces.UserRepository">
 	<insert id="insert">
-		insert into user_tb (username, password, fullname,
-		created_at)
-		values (#{username}, #{password}, #{fullname}, now())
+		INSERT INTO user_tb (username, password, fullname, created_at)
+		VALUES (#{username}, #{password}, #{fullname}, now())
 	</insert>
 
 	<update id="updateById">
-		update user_tb set username = #{username}, password =
-		#{password}, fullname = #{fullname}
-		where id = #{id}
+		UPDATE user_tb SET username = #{username}, password = #{password}, fullname = #{fullname}
+		WHERE id = #{id}
 	</update>
 
 	<delete id="deleteById">
-		delete from user_tb where id = #{id}
+		DELETE from user_tb WHERE id = #{id}
 	</delete>
 
 	<select id="findById" resultType="com.tenco.bank.repository.model.User">
-		select * from user_tb where id = #{id}
+		SELECT * FROM user_tb WHERE id = #{id}
 	</select>
 
 	<select id="findAll" resultType="com.tenco.bank.repository.model.User">
-		select * from user_tb
+		SELECT * FROM user_tb
+	</select>
+
+	<select id="findByUsernameAndPassword" resultType="com.tenco.bank.repository.model.User">
+		SELECT * FROM user_tb WHERE username = #{username} AND password = #{password}
 	</select>
 </mapper>

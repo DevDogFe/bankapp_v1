@@ -1,5 +1,7 @@
 package com.tenco.bank.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tenco.bank.dto.SignInFormDto;
 import com.tenco.bank.dto.SignUpFormDto;
 import com.tenco.bank.handler.exception.CustomRestfulException;
+import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.UserService;
 
 @Controller
@@ -18,10 +21,11 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private HttpSession session;
 
 	/*
 	 * 회원가입 폼
-	 * 
 	 * @return 회원가입 페이지
 	 */
 	@GetMapping("/sign-up")
@@ -32,9 +36,7 @@ public class UserController {
 
 	/*
 	 * 회원가입처리
-	 * 
 	 * @param signUpFormDto
-	 * 
 	 * @return 로그인 페이지
 	 */
 	@PostMapping("/sign-up")
@@ -58,7 +60,6 @@ public class UserController {
 
 	/*
 	 * 로그인 폼
-	 * 
 	 * @return 로그인 페이지
 	 */
 	@GetMapping("/sign-in")
@@ -69,15 +70,40 @@ public class UserController {
 
 	/*
 	 * 로그인 처리
-	 * 
 	 * @param signInFormDto
-	 * 
 	 * @return 메인 페이지 이동(수정 예정)
+	 * Get 방식 처리는 브라우저 히스토리에 남겨지기 때문에
+	 * 예외적으로 로그인은 POST 방식으로 처리한다.
 	 */
 	@PostMapping("/sign-in")
 	public String signInProc(SignInFormDto signInFormDto) {
-
-		return "redirect:/test/main";
+		
+		// 1. 유효성 검사
+		if(signInFormDto.getUsername() == null || signInFormDto.getUsername().isEmpty()) {
+			throw new CustomRestfulException("username을 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(signInFormDto.getPassword() == null || signInFormDto.getPassword().isEmpty()) {
+			throw new CustomRestfulException("password를 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		
+		User principal = userService.signIn(signInFormDto);
+		principal.setPassword(null);
+		
+		session.setAttribute("principal", principal);
+		
+		
+		return "redirect:/account/list";
+	}
+	
+	/*
+	 * 로그아웃 프로세스
+	 * @return 로그인 페이지
+	 */
+	@GetMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		
+		return "redirect:/user/sign-in";
 	}
 
 }
