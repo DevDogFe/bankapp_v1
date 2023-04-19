@@ -20,4 +20,6 @@ public interface AccountRepository {
 	public Account findById(Integer id);
 
 	public ArrayList<Account> findByUserId(Integer userId);
+	
+	public Account findByNumber(String number);
 }

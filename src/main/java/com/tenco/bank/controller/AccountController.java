@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tenco.bank.dto.SaveFormDto;
+import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.exception.CustomPageException;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.handler.exception.UnAuthorizodException;
@@ -68,6 +69,32 @@ public class AccountController {
 		return "account/withdrawForm";
 	}
 
+	// 출금 페이지
+	@PostMapping("/withdraw-proc")
+	public String withdrawProc(WithdrawFormDto withdrawFormDto) {
+		// 인증 검사
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		if(principal == null) {
+			throw new UnAuthorizodException("서비스를 이용하려면 로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+		}
+		if(withdrawFormDto.getAmount() == null) {
+			throw new CustomRestfulException("금액을 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(withdrawFormDto.getAmount().longValue() <= 0) {
+			throw new CustomRestfulException("출금액이 0원 이하일수 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		if(withdrawFormDto.getWAccountNumber() == null || withdrawFormDto.getWAccountNumber().isEmpty()) {
+			throw new CustomRestfulException("계좌번호를 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(withdrawFormDto.getWAccountPassword() == null || withdrawFormDto.getWAccountPassword().isEmpty()) {
+			throw new CustomRestfulException("비밀번호를 입력하세요.", HttpStatus.BAD_REQUEST);
+		}
+		
+		accountService.updateAccountWithdraw(withdrawFormDto, principal.getId());
+		
+		return "redirect:/account/list";
+	}
+	
 	// 입금 페이지
 	@GetMapping("/deposit")
 	public String deposit() {
@@ -131,6 +158,7 @@ public class AccountController {
 		}
 		
 		accountService.createAccount(saveFormDto, principal.getId());
+		
 		
 		return "redirect:/account/list";
 		
