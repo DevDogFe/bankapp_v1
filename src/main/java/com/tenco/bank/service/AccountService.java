@@ -1,5 +1,7 @@
 package com.tenco.bank.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,12 @@ public class AccountService {
 		if(resultRowCount != 1) {
 			throw new CustomRestfulException("계좌 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+	}
+	
+	@Transactional
+	public ArrayList<Account> ReadAccountList(Integer userId){
+		ArrayList<Account> list = accountRepository.findByUserId(userId);
+		return list;
 	}
 
 }

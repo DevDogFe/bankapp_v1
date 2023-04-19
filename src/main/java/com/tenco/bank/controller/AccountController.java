@@ -1,10 +1,13 @@
 package com.tenco.bank.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,7 @@ import com.tenco.bank.dto.SaveFormDto;
 import com.tenco.bank.handler.exception.CustomPageException;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.handler.exception.UnAuthorizodException;
+import com.tenco.bank.repository.model.Account;
 import com.tenco.bank.repository.model.User;
 import com.tenco.bank.service.AccountService;
 import com.tenco.bank.utils.Define;
@@ -32,12 +36,20 @@ public class AccountController {
 	 * @return 목록 페이지 이동
 	 */
 	@GetMapping({ "/list", "/" })
-	public String list() {
+	public String list(Model model) {
 		
 		// 인증 검사
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal == null) {
 			throw new UnAuthorizodException("서비스를 이용하려면 로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+		}
+		// 1. 
+		List<Account> accountList = accountService.ReadAccountList(principal.getId());
+		// Model, ModelAndView: view 화면으로 데이터를 내려주는 기술
+		if(accountList.isEmpty()) {
+			model.addAttribute("accountList", null);
+		} else {
+			model.addAttribute("accountList", accountList);
 		}
 		
 
