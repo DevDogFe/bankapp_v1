@@ -30,12 +30,12 @@
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
 				<c:choose>
-					<c:when test="${principal != null}">
-						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
-					</c:when>
-					<c:otherwise>
+					<c:when test="${principal == null}">
 						<li class="nav-item"><a class="nav-link" href="/user/sign-in">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/sign-up">회원가입</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>

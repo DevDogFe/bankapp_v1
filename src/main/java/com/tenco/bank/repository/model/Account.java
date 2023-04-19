@@ -3,6 +3,7 @@ package com.tenco.bank.repository.model;
 import java.sql.Timestamp;
 
 import lombok.Data;
+import lombok.Setter;
 
 /*
  * 모델 클래스(Value Object 역할만 하는 것은 아니다.)
