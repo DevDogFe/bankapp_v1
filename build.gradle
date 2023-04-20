@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' // 톰캣에서 JSP 처리하기 위해 필요한 라이브러리 JSP 컴파일러 제공
 	implementation 'javax.servlet:jstl' // JSP 개발시 사용되는 JSTL 지원 라이브러리
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0' // MyBatis(SQL 매퍼 프레임워크) 사용 위한 라이브러리
