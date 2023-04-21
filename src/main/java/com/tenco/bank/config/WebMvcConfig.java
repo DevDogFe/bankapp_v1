@@ -10,13 +10,13 @@ import com.tenco.bank.handler.AuthIntercepter;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-	
+
 	@Autowired
 	private AuthIntercepter authIntercepter;
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		
+
 		registry.addInterceptor(authIntercepter).addPathPatterns("/account/**").addPathPatterns("/auth/**");
 	}
 
