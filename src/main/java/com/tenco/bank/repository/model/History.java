@@ -14,4 +14,6 @@ public class History {
 	private Integer wAccountId;
 	private Integer dAccountId;
 	private Timestamp createdAt;
+	
+	
 }

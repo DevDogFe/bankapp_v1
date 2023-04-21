@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.tenco.bank.handler.exception.CustomRestfulException;
-import com.tenco.bank.handler.exception.UnAuthorizodException;
+import com.tenco.bank.handler.exception.UnAuthorizedException;
 
 @RestControllerAdvice // IoC 대상 + AOP
 public class MyRestfulExceptionHandler {
@@ -27,8 +27,8 @@ public class MyRestfulExceptionHandler {
 		return sb.toString();
 	}
 	
-	@ExceptionHandler(UnAuthorizodException.class)
-	public String unAuthorizedException(UnAuthorizodException e) {
+	@ExceptionHandler(UnAuthorizedException.class)
+	public String unAuthorizedException(UnAuthorizedException e) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		// 반드시 마지막에 ; 붙여야 스크립트 동작

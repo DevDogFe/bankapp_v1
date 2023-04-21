@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 import lombok.Getter;
 
 @Getter
-public class UnAuthorizodException extends RuntimeException{
+public class UnAuthorizedException extends RuntimeException{
 
 	private HttpStatus status;
 	
-	public UnAuthorizodException(String message, HttpStatus status) {
+	public UnAuthorizedException(String message, HttpStatus status) {
 		super(message);
 		this.status = status;
 	}

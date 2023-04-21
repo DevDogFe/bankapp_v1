@@ -5,7 +5,7 @@
 <div class="col-sm-8">
 	<h2>나의 계좌 목록</h2>
 	<h5>어서오세요 환영합니다</h5>
-	<div class="bg-light p-md-5 h-75 align-items-center justify-content-center">
+	<div class="bg-light p-md-5 h-75">
 		<c:choose>
 			<c:when test="${accountList != null}">
 				<table class="table">
@@ -19,8 +19,8 @@
 					<tbody>
 						<c:forEach var="account" items="${accountList}">
 							<tr>
-								<td>${account.number}</td>
-								<td>${account.balance}원</td>
+								<td><a href="/account/detail/${account.id}">${account.number}</a></td>
+								<td>${account.formatBalance()}</td>
 								<td>${account.createdAt}</td>
 							</tr>
 						</c:forEach>

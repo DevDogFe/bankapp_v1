@@ -29,7 +29,4 @@ VALUES (100, 700, null, 1, null, now());
 INSERT INTO history_tb(amount, w_balance, d_balance, 
 					   w_account_id, d_account_id, created_at)
 VALUES (500, null, 1200, null, 1, now());
--- 입금 내역 (2번 계좌에 1000원 입금 처리 )
-INSERT INTO history_tb(amount, w_balance, d_balance, 
-					   w_account_id, d_account_id, created_at)
-VALUES (1000, null, 2200, null, 1, now());
+

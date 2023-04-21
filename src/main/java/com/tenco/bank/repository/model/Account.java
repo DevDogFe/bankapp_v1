@@ -1,6 +1,7 @@
 package com.tenco.bank.repository.model;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 import org.springframework.http.HttpStatus;
 
@@ -32,7 +33,7 @@ public class Account {
 	
 	// 패스워드 체크
 	public void checkPassword(String password) {
-		if(!this.password.equals(password)) {
+		if(!password.equals(password)) {
 			throw new CustomRestfulException("계좌 비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -47,6 +48,12 @@ public class Account {
 		if(userId != principalId) {
 			throw new CustomRestfulException("본인계좌에서만 출금할 수 있습니다.", HttpStatus.FORBIDDEN);
 		}
+	}
+	
+	public String formatBalance() {
+		DecimalFormat df = new DecimalFormat("#,###");
+		String formatNumber = df.format(balance);
+		return formatNumber + "원";
 	}
 	
 }
