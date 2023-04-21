@@ -21,5 +21,6 @@ public interface UserRepository {
 
 	public ArrayList<User> findAll();
 
-	public User findByUsernameAndPassword(SignInFormDto signInFormDto);
+	public User findByUsername(SignInFormDto signInFormDto);
+	
 }
